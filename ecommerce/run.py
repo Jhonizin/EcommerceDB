@@ -1,7 +1,9 @@
 from app import create_app, db
 from flask_login import LoginManager
 from app.models import Usuario, Anuncio, Categoria
+import sys
 
+sys.path.insert(0, '/home/LuizDev')
 # Criar a aplicação Flask
 app = create_app()
 
