@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categoria: {{ categoria.nome }}</title>
+    <!-- Link do Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">E-commerce</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/categoria/{{ categoria.id }}">Categoria: {{ categoria.nome }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Categoria: {{ categoria.nome }}</h1>
+
+        <div class="row">
+            {% for anuncio in anuncios %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {% if anuncio.imagem %}
+                        <img src="{{ url_for('static', filename='imagens/' ~ anuncio.imagem) }}" class="card-img-top" alt="{{ anuncio.titulo }}">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='imagens/default.jpg') }}" class="card-img-top" alt="Imagem padrão">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ anuncio.titulo }}</h5>
+                        <p class="card-text">{{ anuncio.descricao[:100] }}...</p>
+                        <p class="card-text"><strong>Preço:</strong> R$ {{ anuncio.preco }}</p>
+                        <a href="{{ url_for('main.visualizar_anuncio', id=anuncio.id) }}" class="btn btn-primary">Ver Detalhes</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12">
+                <p class="alert alert-warning">Não há anúncios nesta categoria.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Link do Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

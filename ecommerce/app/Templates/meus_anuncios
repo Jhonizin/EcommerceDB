@@ -1,0 +1,53 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Meus Anúncios</h1>
+    
+    <!-- Formulário para adicionar anúncios -->
+    <form method="POST" class="mb-4 p-3 border rounded bg-light">
+        <h4>Adicionar Novo Anúncio</h4>
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Digite o título do anúncio" required>
+        </div>
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea class="form-control" id="descricao" name="descricao" placeholder="Digite a descrição" rows="3" required></textarea>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="preco" class="form-label">Preço</label>
+                <input type="number" class="form-control" id="preco" name="preco" placeholder="Digite o preço" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="categoria_id" class="form-label">Categoria</label>
+                <select class="form-select" id="categoria_id" name="categoria_id" required>
+                    {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Adicionar Anúncio</button>
+    </form>
+
+    <!-- Lista de anúncios criados -->
+    <h2 class="mt-4">Anúncios Criados</h2>
+    <ul class="list-group mt-3">
+        {% for anuncio in anuncios %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <strong>{{ anuncio.titulo }}</strong> - R$ {{ anuncio.preco }}
+                <p class="mb-0 text-muted">{{ anuncio.descricao }}</p>
+            </div>
+            <div>
+                <a href="{{ url_for('main.editar_anuncio', id=anuncio.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                <form method="POST" action="{{ url_for('main.excluir_anuncio', id=anuncio.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

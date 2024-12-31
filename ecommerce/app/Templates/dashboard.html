@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Dashboard do Perfil</h1>
+    
+    <!-- Informações pessoais -->
+    <div class="mb-4">
+        <h4>Informações Pessoais</h4>
+        <p><strong>Nome:</strong> {{ usuario.nome }}</p>
+        <p><strong>Email:</strong> {{ usuario.email }}</p>
+    </div>
+    
+    <!-- Histórico de compras -->
+    <div class="mb-4">
+        <h4>Histórico de Compras</h4>
+        <ul class="list-group">
+            {% for compra in compras %}
+            <li class="list-group-item">
+                Anúncio: {{ compra.anuncio.titulo }} - Data: {{ compra.data }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <!-- Meus anúncios -->
+    <div class="mb-4">
+        <h4>Meus Anúncios</h4>
+        <ul class="list-group">
+            {% for anuncio in anuncios %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ anuncio.titulo }} - R$ {{ anuncio.preco }}</span>
+                <a href="{{ url_for('main.editar_anuncio', id=anuncio.id) }}" class="btn btn-sm btn-primary">Editar</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
